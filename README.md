@@ -1,2 +1,2 @@
-# DSA-CCET
-Data Structures and Algorithms implemented by students of Chandigarh College Of Engineering and Technology.
+# DSA/Coding-CCET
+Data Structures, Algorithms and various real life Coding implementations by students of Chandigarh College Of Engineering and Technology.
