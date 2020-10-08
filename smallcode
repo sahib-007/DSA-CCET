@@ -1,0 +1,6 @@
+print("Wel come to my Dictionary")
+
+dec={"C#":"C# is a Programming language which is used in dot net framework","SQL":"SQL Used for Database","Python":"Python is also a programming language","javascript":"Javascript is a platform independent"}
+print("Search your query")
+inpum = input()
+print(dec[inpum])
