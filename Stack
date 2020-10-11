@@ -1,0 +1,145 @@
+#include<iostream>
+#include<stdio.h>
+#include<malloc.h>
+using namespace std;
+
+int *stack;
+int top=-1;
+
+void push(int n);
+void pop(int n);
+void peek(int n);
+void update(int n);
+void display(int n);
+
+int main()
+{
+    int n;
+    int ch;
+    char choice;
+    cout<<"\n Enter the size of the stack: ";
+    cin>>n;
+    stack=(int *)malloc(sizeof(int)*n);
+    do{
+    cout<<"\n 1-Insert/Push";
+    cout<<"\n 2-Delete/Pop";
+    cout<<"\n 3-Peek";
+    cout<<"\n 4-Update";
+    cout<<"\n 5-Display";
+    cout<<"\n Enter choice: ";
+    cin>>ch;
+    switch(ch)
+    {
+        case 1: push(n);
+                break;
+        case 2: pop(n);
+                break;
+        case 3: peek(n);
+                break;
+        case 4: update(n);
+                break;
+        case 5: display(n);
+                break;
+        default: cout<<"\n Invalid Input";
+                break;
+    }
+    cout<<"\n Do you want to perform more operations?: ";
+    cin>>choice;
+    }while(choice=='y');
+    return 0;
+}
+
+void push(int n)
+{
+    char ch;
+    do{
+    if(top==n)
+    {
+        cout<<"\n Overflow";
+    }
+    else
+    {
+        top++;
+        cout<<"\n Enter value to be inserted: ";
+        cin>>stack[top];
+    }
+    cout<<"\n Do you want to add more?: ";
+    cin>>ch;
+    }while(ch=='y');
+
+}
+
+void pop(int n)
+{
+    if(top==-1)
+    {
+        cout<<"\n Underflow";
+    }
+    else
+    {
+        cout<<"\n Popped element: "<<stack[top];
+        top--;
+    }
+}
+
+void peek(int n)
+{
+    int temp[n];
+    int tos=-1;
+    int p;
+    cout<<"\n Enter the position: ";
+    cin>>p;
+    for(;top<p-1;top--)
+    {
+       tos++;
+       temp[tos]=stack[top];
+
+    }
+    cout<<"\n Element found: "<<stack[top-1];
+    for(;tos>=0;tos--)
+    {
+        top++;
+        stack[top]=temp[tos];
+    }
+}
+
+void update(int n)
+{
+    int temp[n];
+    int tos=-1;
+    int p;
+    cout<<"\n Enter the position: ";
+    cin>>p;
+    for(;top<p-1;top--)
+    {
+       tos++;
+       temp[tos]=stack[top];
+
+    }
+
+        cout<<"\n Enter the new value: ";
+        cin>>stack[top-1];
+    for(;tos>=0;tos--)
+    {
+        top++;
+        stack[top]=temp[tos];
+    }
+}
+
+void display(int n)
+{
+    int temp[n];
+    int tos=-1;
+
+    for(;top>=0;top--)
+    {
+        tos++;
+        temp[tos]=stack[top];
+    }
+    for(;tos>=0;tos--)
+    {
+        cout<<"\n"<<temp[tos];
+        top++;
+        stack[top]=temp[tos];
+    }
+}
