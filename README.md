@@ -1,8 +1,13 @@
 # DSA/Coding-CCET
-## Happy Hacktober Fest
+<img src="img/hfimg.png">
+
+## Happy Hacktober Fest 2020
 
 Data Structures, Algorithms and various real life Coding implementations by various open-source contributors. <br/>
 **Open to contributions for Hacktoberfest to get started with github, and other open source collaboration**
+
+## License
+**GNU General Purpose License release **
 
 ## Contributing & PR
 
