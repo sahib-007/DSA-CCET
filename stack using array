@@ -1,0 +1,169 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define CAPACITY 5
+void push(int);
+int pop(void);
+int isFull(void);
+int isEmpty(void);
+void traverse(void);
+void peek(void);
+void update(int );
+int length(void);
+int stack[CAPACITY];
+int top=-1;
+int main()
+{
+	int ch,item,len;
+	while(1)
+	{
+		printf("1.PUSH\n");
+		printf("2.POP\n");
+		printf("3.PEEK\n");
+		printf("4.TRAVERSE\n");
+		printf("5. UPDATE\n");
+		printf("6.LENGTH\n");
+		printf("7. EXIT\n");
+		printf("Enter your choice\n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:printf("Enter element:\n");
+			       scanf("%d",&item);
+			       push(item);
+			       break;
+			case 2: item=pop();
+			       if(item==0)
+				   {
+				   	printf("UNDERFLOW\n");
+						  } 
+					else
+					{
+						printf("Popped item %d\n ",item);
+								}
+					break;			
+			case 3: peek();
+			        break;
+			case 4: traverse();
+			        break; 
+			case 5: printf("Enter element :\n");
+			        scanf("%d",&item);
+			        update(item);
+			     	break;
+			case 6: len=length();
+			        printf("Length:%d\n\n",len);
+					break;     	
+					      
+			case 7: exit(1);
+			        break;	  
+					      
+		    default: printf("INVALID CHOICE\n\n");						        
+		}
+	}
+}
+void push(int ele)
+{
+	if(isFull())
+	{
+		printf("OVERFLOW\n");
+	}
+	else
+	{
+		top++;
+		stack[top]=ele;
+		printf("%dElement push\n",ele);
+	}
+}
+int isFull()
+{
+	if(top==CAPACITY-1)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+int pop()
+{
+	if(isEmpty())
+	{
+		printf("UNDERFLOW\n");
+	}
+	else
+	{
+		return stack[top--];
+	}
+}
+int isEmpty()
+{
+	if(top==-1)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+void peek()
+{
+	if(isEmpty())
+	{
+		printf("UNDERFLOW\n");
+	}
+	else
+	{
+		printf("peek element :%d\n",stack[top]);
+	}
+}
+void traverse()
+{
+	if(isEmpty())
+	{ 
+	printf("UNDERFLOW\n");
+	}
+	else
+	{
+		int i;
+		printf("Stack Element :\n");
+		for(i=top;i>=0;i--)
+		{
+			printf("%d\n",stack[i]);
+		}
+	}
+}
+void update(int x)
+{
+	int i;
+	printf("Which index element you want to change \n");
+	scanf("%d",&i);
+	if(top-i+1<=0)
+	{
+		printf("UNDERFLOW\n");
+	}
+	else
+	{
+		stack[i]=x;
+	}
+	
+}
+int length()
+{
+	int count=0;
+ if(isEmpty())
+	{ 
+	printf("UNDERFLOW\n");
+	}
+	else
+	{
+		int i;
+		printf("Stack Element :\n");
+		for(i=top;i>=0;i--)
+		{
+			printf("%d\n",stack[i]);
+			count++;
+		}
+	}
+	return count;	
+}
