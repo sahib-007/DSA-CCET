@@ -1,0 +1,41 @@
+#include<iostream>
+#include<fstream>
+#include<string.h>
+using namespace std;
+int main()
+{
+	string s;
+	getline(cin,s);
+	int i;
+	
+	ofstream fout;
+	fout.open("henlo.txt");
+	fout<<s;
+	fout.close();
+	
+	cout<<"reverse=\n";
+	
+	ifstream fin;
+	ofstream foutt;
+	fin.open("henlo.txt");
+	foutt.open("hi.txt");
+	fin.seekg(-1,ios_base::end);
+	while(fin.tellg()>=0)
+	{
+	    char k;
+		k=(char)fin.get();
+		foutt<<k;
+		fin.seekg(fin.tellg()-2);	
+	}
+	fin.close();
+	foutt.close();
+	
+	ifstream finn;
+	finn.open("hi.txt");
+	while(!finn.eof())
+	{
+	    char l=finn.get();
+	    cout<<l;
+	}
+	finn.close();
+}
