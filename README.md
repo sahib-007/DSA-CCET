@@ -7,7 +7,7 @@ Data Structures, Algorithms and various real life Coding implementations by vari
 **Open to contributions for Hacktoberfest to get started with github, and other open source collaboration**
 
 ## License
-**GNU General Purpose License release **
+**GNU General Purpose License release Version 3**
 
 ## Contributing & PR
 
