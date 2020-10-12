@@ -58,7 +58,7 @@
                 <p class="mobile-profession" id="demo">
                   Data Structures, Algorithms and various real life Coding implementations by various open-source contributors.
                   Open to contributions for Hacktoberfest to get started with github, and other open source collaborations.<br/>
-                  <button onclick="typeWriter()">Why to contribute??</button>
+                  <button onclick="typeWriter1()">Why to contribute??</button>
                 </p>
                 <h4 class="mb-4" id="demo1">
                   Data Structures, Algorithms and various real life Coding implementations by various open-source contributors.
@@ -265,6 +265,14 @@
           document.getElementById("demo1").innerHTML += txt.charAt(i);
           i++;
           setTimeout(typeWriter, speed);
+        }
+      }
+      
+        function typeWriter1() {
+        if (i < txt.length) {
+          document.getElementById("demo").innerHTML += txt.charAt(i);
+          i++;
+          setTimeout(typeWriter1, speed);
         }
       }
       </script>
