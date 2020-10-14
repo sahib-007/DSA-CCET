@@ -1,70 +1,36 @@
-// BFS algorithm in C
-
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 40
-
-struct queue {
-  int items[SIZE];
-  int front;
-  int rear;
-};
-
-struct queue* newqueue();
-void enqueue(struct queue* q, int);
-int dequeue(struct queue* q);
-void display(struct queue* q);
-int empty(struct queue* q);
-void print(struct queue* q);
 
 struct node {
     int vertex;
     struct node* next;
 };
-
-struct node* createnode(int);
-
-struct Graph {
-    int numVertices;
-    struct node** adj;
+    struct node* createnode(int v);
+    struct Graph {
+    int num;
     int* visited;
+  // We need int** to store a two dimensional array.
+  // Similary, we need struct node** to store an array of Linked lists
+    struct node** adj;
 };
-
-// BFS algorithm
-void bfs(struct Graph* graph, int startVertex, int k)
+// DFS algo
+void DFS(struct Graph* graph, int vertex)
 {
-    int n,j=0, arr[SIZE];
-    struct queue* q = newqueue();
-    graph->visited[startVertex] = 1;
-    enqueue(q, startVertex);
-    while (!empty(q))
+    struct node* adjList = graph->adj[vertex];
+    struct node* temp = adjList;
+    graph->visited[vertex]=1;
+    printf("%d \n", vertex);
+    while (temp != NULL)
     {
-        print(q);
-        int currentVertex = dequeue(q);
-        printf("\nVertex traversed is %d\n", currentVertex);
-        {
-            arr[j]=currentVertex;
-            j++;
-        }
-        struct node* temp = graph->adj[currentVertex];
-        while (temp)
-        {
-            int adjVertex = temp->vertex;
-            if (graph->visited[adjVertex] == 0)
-            {
-                graph->visited[adjVertex] = 1;
-                enqueue(q, adjVertex);
-            }
-            temp = temp->next;
-        }
+        int connectedVertex = temp->vertex;
+        if (graph->visited[connectedVertex] == 0)
+    {
+        DFS(graph, connectedVertex);
     }
-    printf("The order of traversal is\n");
-    for(n=0;n<j;n++)
-    {
-        printf("%d\n",arr[n]);
+    temp = temp->next;
     }
 }
-// Creating a node
+// Create a node
 struct node* createnode(int v)
 {
     struct node* newnode = malloc(sizeof(struct node));
@@ -72,12 +38,11 @@ struct node* createnode(int v)
     newnode->next = NULL;
     return newnode;
 }
-
-// Creating a graph
-struct Graph* creategraph(int vertices)
+// Create graph
+struct Graph* newgraph(int vertices)
 {
     struct Graph* graph = malloc(sizeof(struct Graph));
-    graph->numVertices = vertices;
+    graph->num = vertices;
     graph->adj = malloc(vertices * sizeof(struct node*));
     graph->visited = malloc(vertices * sizeof(int));
     int i;
@@ -88,11 +53,10 @@ struct Graph* creategraph(int vertices)
     }
     return graph;
 }
-
 // Add edge
 void addedge(struct Graph* graph, int src, int dest)
 {
-  // Add edge from src to dest
+    // Add edge from src to dest
     struct node* newnode = createnode(dest);
     newnode->next = graph->adj[src];
     graph->adj[src] = newnode;
@@ -101,91 +65,40 @@ void addedge(struct Graph* graph, int src, int dest)
     newnode->next = graph->adj[dest];
     graph->adj[dest] = newnode;
 }
-
-// Create a queue
-struct queue* newqueue()
+/*void printGraph(struct Graph* graph)
 {
-    struct queue* q = malloc(sizeof(struct queue));
-    q->front = -1;
-    q->rear = -1;
-    return q;
-}
-// Check if the queue is empty
-int empty(struct queue* q)
-{
-    if (q->rear == -1)
-        return 1;
-    else
-        return 0;
-}
-
-// Adding elements into queue
-void enqueue(struct queue* q, int value)
-{
-    // if queue is full
-    if (q->rear == SIZE - 1)
-        printf("\nQueue is Full!!");
-    else
+    int v;
+    printf("The graph is\n");
+    for (v=0;v<graph->num;v++)
     {
-        //queue has space
-        if (q->front == -1)
-            q->front = 0;
-        q->rear++;
-        q->items[q->rear] = value;
-    }
-}
-// Removing elements from queue
-int dequeue(struct queue* q)
-{
-    int item;
-    if (empty(q))
-    {
-        printf("Queue is empty");
-        item = -1;
-    }
-    else
-    {
-        item = q->items[q->front];
-        q->front++;
-        if (q->front > q->rear)
+        struct node* temp = graph->adj[v];
+        printf("\nneighbours of %d\n ", v);
+        while(temp)
         {
-            q->front = q->rear = -1;
-        }
-  }
-  return item;
-}
-
-// Print the queue
-void print(struct queue* q)
-{
-    int i = q->front;
-    if (empty(q))
-    {
-        printf("Queue is empty");
-    }
-    else
-    {
-        printf("\nQueue contains \n");
-        for (i = q->front; i < q->rear + 1; i++)
-        {
-            printf("%d ", q->items[i]);
+            printf("%d ", temp->vertex);
+            temp = temp->next;
         }
     }
-}
-int a,b,c,d=0,e,j;
+    printf("\n\n");
+}*/
+// Print the graph
+int n,i,s,d,start;
 int main()
 {
-    printf("Enter the number of edges in the graph\n");
-    scanf("%d",&a);
-    struct Graph* graph = creategraph(a);
-    for(d=0;d<a;d++)
+    printf("Enter the number of edges\n");
+    scanf("%d",&n);
+    struct Graph* graph = newgraph(n);
+    for(i=1;i<=n;i++)
     {
-        printf ("Enter vertices which are connect edge %d\n",d+1);
-        scanf("%d  %d",&b,&c);
-        addedge(graph, b, c);
+        printf("Enter the source and destination vertex of edge %d\n",i);
+        scanf("%d %d",&s,&d);
+        addedge(graph, s, d);
     }
-    printf("Enter the start vertex\n");//Enter the vertex from which the traversal is to be started
-    scanf("%d",&e);
-    bfs(graph, e, a);
-    return 0;
+    printf("Enter the start vertex\n");
+    scanf("%d",&start);
+    printf("\n");
+    //printGraph(graph);
+    printf("The order of traversal\n");
+    DFS(graph, start);
+  return 0;
 }
