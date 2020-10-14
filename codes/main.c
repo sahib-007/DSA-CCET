@@ -1,104 +1,78 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<math.h>
+#include<time.h>
+//#include<sys/utsname.h>
 
-struct node {
-    int vertex;
-    struct node* next;
-};
-    struct node* createnode(int v);
-    struct Graph {
-    int num;
-    int* visited;
-  // We need int** to store a two dimensional array.
-  // Similary, we need struct node** to store an array of Linked lists
-    struct node** adj;
-};
-// DFS algo
-void DFS(struct Graph* graph, int vertex)
-{
-    struct node* adjList = graph->adj[vertex];
-    struct node* temp = adjList;
-    graph->visited[vertex]=1;
-    printf("%d \n", vertex);
-    while (temp != NULL)
-    {
-        int connectedVertex = temp->vertex;
-        if (graph->visited[connectedVertex] == 0)
-    {
-        DFS(graph, connectedVertex);
-    }
-    temp = temp->next;
-    }
-}
-// Create a node
-struct node* createnode(int v)
-{
-    struct node* newnode = malloc(sizeof(struct node));
-    newnode->vertex = v;
-    newnode->next = NULL;
-    return newnode;
-}
-// Create graph
-struct Graph* newgraph(int vertices)
-{
-    struct Graph* graph = malloc(sizeof(struct Graph));
-    graph->num = vertices;
-    graph->adj = malloc(vertices * sizeof(struct node*));
-    graph->visited = malloc(vertices * sizeof(int));
-    int i;
-    for (i = 0; i < vertices; i++)
-    {
-        graph->adj[i] = NULL;
-        graph->visited[i] = 0;
-    }
-    return graph;
-}
-// Add edge
-void addedge(struct Graph* graph, int src, int dest)
-{
-    // Add edge from src to dest
-    struct node* newnode = createnode(dest);
-    newnode->next = graph->adj[src];
-    graph->adj[src] = newnode;
-    // Add edge from dest to src
-    newnode = createnode(src);
-    newnode->next = graph->adj[dest];
-    graph->adj[dest] = newnode;
-}
-/*void printGraph(struct Graph* graph)
-{
-    int v;
-    printf("The graph is\n");
-    for (v=0;v<graph->num;v++)
-    {
-        struct node* temp = graph->adj[v];
-        printf("\nneighbours of %d\n ", v);
-        while(temp)
-        {
-            printf("%d ", temp->vertex);
-            temp = temp->next;
-        }
-    }
-    printf("\n\n");
-}*/
-// Print the graph
-int n,i,s,d,start;
+int arr[20],count;
+char t;
+
 int main()
 {
-    printf("Enter the number of edges\n");
+    int n,i,j;
+    void nqueen(int row,int n);
+    printf("Enter the side length of board\n");
     scanf("%d",&n);
-    struct Graph* graph = newgraph(n);
+    clock_t t;
+    t=clock();
+    nqueen(1,n);
+    t=clock()-t;
+    double time_taken = ((double)t)/CLOCKS_PER_SEC;
+    printf("\n\nNumber of solutions is : %d",count);
+    printf("\nThe program took %f seconds to execute \n\n", time_taken);
+    printf("System configuration is:\n");
+    printf("Processor: \t\tIntel(R) Core(TM) i5-4210U CPU @ 1.70GHz 2.40GHz\n");
+    printf("Installed memory(RAM):\t8GB(7.89GB usable)\n");
+    printf("System type: \t\t64-bit Operating System, x64-based processor\n");
+    return 0;
+}
+//function to check for proper positioning of queen
+void nqueen(int row,int n)
+{
+    int solution=0,column;
+    for(column=1;column<=n;column++)
+    {
+        if(place(row,column))
+        {
+            arr[row]=column; //no conflicts so place queen
+            if(row==n) //dead end
+                show(n); //printing the arr configuration
+            else //try queen with next position
+                nqueen(row+1,n);
+        }
+    }
+}
+//function for printing the solution
+void show(int n)
+{
+    int i,j;
+    printf("\n\nSolution %d:",++count);
     for(i=1;i<=n;i++)
     {
-        printf("Enter the source and destination vertex of edge %d\n",i);
-        scanf("%d %d",&s,&d);
-        addedge(graph, s, d);
+       printf("\n\n");
+        for(j=1;j<=n;j++) //for nxn arr
+        {
+            if(arr[i]==j)
+            {
+                printf("\tQ"); //queen at i,j position
+            }
+            else
+                printf("\tx"); //empty slot
+        }
     }
-    printf("Enter the start vertex\n");
-    scanf("%d",&start);
-    printf("\n");
-    //printGraph(graph);
-    printf("The order of traversal\n");
-    DFS(graph, start);
-  return 0;
+}
+/*funtion to check conflicts
+If no conflict for desired postion returns 1 otherwise returns 0*/
+int place(int row,int column)
+{
+    int i;
+    for(i=1;i<=row-1;i++)
+    {
+    //checking column and digonal conflicts
+        if(arr[i]==column)
+            return 0;
+        else
+            if(abs(arr[i]-column)==abs(i-row))
+                return 0;
+    }
+    return 1; //no conflicts
 }
